@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Student Interns | U.S. Government-Approved Internships</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Previous styles remain the same -->
+    <style>
+        /* Previous styles remain unchanged */
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            border-radius: 8px;
+        }
+        .form-success {
+            display: none;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Previous navigation and hero sections remain unchanged -->
+
+    <!-- New Contact/Application Form Section -->
+    <section class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-section p-4 shadow-sm">
+                    <h2 class="text-center mb-4">Apply for Internship Opportunities</h2>
+                    <p class="text-center mb-4">Fill out this form and we'll connect you with matching opportunities</p>
+                    
+                    <div id="form-success" class="form-success text-center mb-4">
+                        Thank you! Your application has been submitted. We'll contact you shortly.
+                    </div>
+                    
+                    <form id="internshipForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name*</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name*</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email*</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone">
+                            </div>
+                            <div class="col-12">
+                                <label for="university" class="form-label">University/College*</label>
+                                <input type="text" class="form-control" id="university" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="major" class="form-label">Major/Field of Study*</label>
+                                <input type="text" class="form-control" id="major" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="visaStatus" class="form-label">Current Visa Status*</label>
+                                <select class="form-select" id="visaStatus" required>
+                                    <option value="" selected disabled>Select your status</option>
+                                    <option value="F-1">F-1 Student</option>
+                                    <option value="J-1">J-1 Exchange Visitor</option>
+                                    <option value="OPT">OPT (Post-Completion)</option>
+                                    <option value="CPT">CPT (During Studies)</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="interests" class="form-label">Internship Interests (Select up to 3)*</label>
+                                <select class="form-select" id="interests" multiple required>
+                                    <option value="Software Engineering">Software Engineering</option>
+                                    <option value="Data Science">Data Science</option>
+                                    <option value="Business Analytics">Business Analytics</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    <option value="Electrical Engineering">Electrical Engineering</option>
+                                    <option value="Biotechnology">Biotechnology</option>
+                                </select>
+                                <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Additional Information</label>
+                                <textarea class="form-control" id="message" rows="3" placeholder="Tell us about your skills, experience, and internship preferences"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" required>
+                                    <label class="form-check-label" for="consent">
+                                        I consent to having my information processed in accordance with the privacy policy*
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-4">
+                                    <span id="submitText">Submit Application</span>
+                                    <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Previous sections remain unchanged -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('internshipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('spinner').classList.remove('d-none');
+            document.getElementById('submitText').textContent = 'Submitting...';
+            
+            // Collect form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                university: document.getElementById('university').value,
+                major: document.getElementById('major').value,
+                visaStatus: document.getElementById('visaStatus').value,
+                interests: Array.from(document.getElementById('interests').selectedOptions)
+                                .map(option => option.value).join(', '),
+                message: document.getElementById('message').value
+            };
+            
+            // Format message for Telegram
+            const telegramMessage = `
+            <b>New Internship Application</b>
+            <b>Name:</b> ${formData.firstName} ${formData.lastName}
+            <b>Email:</b> ${formData.email}
+            <b>Phone:</b> ${formData.phone || 'Not provided'}
+            <b>University:</b> ${formData.university}
+            <b>Major:</b> ${formData.major}
+            <b>Visa Status:</b> ${formData.visaStatus}
+            <b>Interests:</b> ${formData.interests}
+            <b>Additional Info:</b> ${formData.message || 'None'}
+            `;
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(telegramMessage);
+            
+            // Replace with your actual API key and chat ID
+            const apiKey = 'YOUR_TELEGRAM_BOT_API_KEY';
+            const chatId = 'YOUR_TELEGRAM_CHAT_ID';
+            
+            // Send to Telegram via API
+            fetch(`https://api.telegram.org/bot${apiKey}/sendMessage?chat_id=${chatId}&text=${encodedMessage}&parse_mode=HTML`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide spinner and show success message
+                    document.getElementById('spinner').classList.add('d-none');
+                    document.getElementById('submitText').textContent = 'Submit Application';
+                    document.getElementById('form-success').style.display = 'block';
+                    document.getElementById('internshipForm').reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('form-success').style.display = 'none';
+                    }, 5000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('spinner').classList.add('d-none');
+                    document.getElementById('submitText').textContent = 'Submit Application';
+                    alert('There was an error submitting your application. Please try again.');
+                });
+        });
+    </script>
+</body>
+</html>
